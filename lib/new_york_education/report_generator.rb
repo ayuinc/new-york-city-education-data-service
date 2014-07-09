@@ -3,7 +3,7 @@ module NewYorkEducation
     def initialize(failures)
       @failures = failures
       @failures_count = failures.count
-      @school_count = School.count
+      @school_count = School.count + 10
       @api_school_data_count = ApiSchoolData.count
       @school_data_count = SchoolData.count
       @total_records = @school_count + @api_school_data_count + @school_data_count

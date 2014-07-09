@@ -1,7 +1,7 @@
 Data Test Report
 ======
 
-1758 schools
+1768 schools
 
 15822 school data records
 
