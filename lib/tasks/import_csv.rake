@@ -27,7 +27,7 @@ namespace :csv do
   def csv_to_relational_db(file, model)
     ActiveRecord::Base.transaction do
       CSV.foreach(file, headers: true) do |row|
-        model.find_or_create_by!(row.to_hash)
+        model.create!(row.to_hash)
       end
     end
   end

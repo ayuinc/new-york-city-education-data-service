@@ -19,6 +19,11 @@ rake csv:import
 Now import the data from the NYC Education API
 
 ```console
-rake education_api:import
+rake api_data:import
 ```
 
+Finally, to run the tests:
+
+```console
+rake check_data:run
+```
