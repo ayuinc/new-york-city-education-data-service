@@ -42,5 +42,5 @@ rake api_data:import
 Finally, to run the test:
 
 ```console
-rake check_data:run
+rake data_test:run
 ```
