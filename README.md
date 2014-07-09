@@ -1,28 +1,45 @@
 NYC Education Test
 ======
 
-This app is designed to make sure the JSON returned by http://ayuinc.com/nyceducation is accurate. This app compares almost 10 thousand records so setting up the app might take a little while.
+This app generates a report that compared JSON for the 7032 JSON school records from ayu.com/nyceducation and compares them with the actual data from a CSV.
 
-To install the app the first thing you want to do is create the database
+Eventually the aim is to be able to make the testing of data more scalable by allowing a user to load a CSV on the browser and generating a report that is emailed to the user. 
+
+For now you need to run it locally on your machine or you can look at the report generated for you here:
+
+[Data Report](report.md)
+
+How to run it on your machine
+
+This app generates almost 20 thousand records so setup can take a while. If your
+new to Rails you'll need to do the following:
+
+First you need to install all the dependencies. Go to the root of the app and in the console type:
+
+```console
+bundle install
+```
+
+Next you want to create the database:
 
 ```console
 rake db:create
 rake db:migrate
 ```
 
-Then you need to populate the correct school data
+Then you need to populate the correct school data from the csv in lib/csv/
 
 ```console
 rake csv:import
 ```
 
-Now import the data from the NYC Education API
+Now import the data from the NYC Education API (Note this can take almost half an hour)
 
 ```console
 rake api_data:import
 ```
 
-Finally, to run the tests:
+Finally, to run the test:
 
 ```console
 rake check_data:run
