@@ -10,17 +10,3 @@ guard :rspec, cmd:"spring rspec" do
   watch(%r{^spec/support/(.+)\.rb$})                  { "spec" }
   watch('config/routes.rb')                           { "spec/routing" }
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
-
-  # Capybara features specs
-  watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/features/#{m[1]}_spec.rb" }
-
-  # Turnip features and steps
-  watch(%r{^spec/acceptance/(.+)\.feature$})
-  watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$})   { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/acceptance' }
-end
-
-guard 'cucumber', command_prefix: 'spring', bundler: false, notification: true, all_on_start: false, all_after_pass: false, cli: '--no-profile --color --format pretty --tags ~@todo --tags ~@wip' do
-  watch(%r{^features/.+\.feature$})
-  #watch(%r{^features/support/.+$})          { 'features' }
-  #watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
-end
