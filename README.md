@@ -10,7 +10,7 @@ For now you need to run it locally on your machine or you can look at the report
 
 [Data Report](report.md)
 
-How to run it on your machine
+###How to run it on your machine
 
 This app generates almost 20 thousand records so setup can take a while. If your
 new to Rails you'll need to do the following:
@@ -28,25 +28,22 @@ rake db:create
 rake db:migrate
 ```
 
-Then you need to populate the correct school data from the csv in lib/csv/
+Then you need to populate the correct school data from the CSV provided. Note: geolocation data is 
+provided in the CSV so you don't have to import that later.
 
 ```console
 rake csv:import
 ```
 
-To import the geolocation data for the schools
+###How to test NYC's Education API
 
-```console
-rake geocode:all CLASS=School SLEEP=0.25 BATCH=100
-```
-
-Now import the data from the NYC Education API (Note this can take almost half an hour)
+You will have to import the data from NYC Education. Note: this can take almost hald an hour.
 
 ```console
 rake api_data:import
 ```
 
-Finally, to run the test:
+To run the test:
 
 ```console
 rake data_test:run
