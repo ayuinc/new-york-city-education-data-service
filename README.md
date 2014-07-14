@@ -1,7 +1,8 @@
 NYC Education Test
 ======
 
-This app generates a report that compared JSON for the 7032 JSON school records from ayu.com/nyceducation and compares them with the actual data from a CSV.
+This app has three features: search by address with geolocation data, fuzzy
+search by name, and a report generator that compareds JSON for the 7032 JSON school records from ayu.com/nyceducation and compares them with the actual data from a CSV.
 
 Eventually the aim is to be able to make the testing of data more scalable by allowing a user to load a CSV on the browser and generating a report that is emailed to the user. 
 
@@ -31,6 +32,12 @@ Then you need to populate the correct school data from the csv in lib/csv/
 
 ```console
 rake csv:import
+```
+
+To import the geolocation data for the schools
+
+```console
+rake geocode:all CLASS=School SLEEP=0.25 BATCH=100
 ```
 
 Now import the data from the NYC Education API (Note this can take almost half an hour)

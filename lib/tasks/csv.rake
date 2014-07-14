@@ -6,6 +6,18 @@ namespace :csv do
     Rake::Task["csv:school_data"].invoke
   end
 
+  desc "Export data to csv"
+  task export: :environment do
+    Rake::Task["csv:school_geolocation_data"].invoke
+  end
+
+  #desc "Export school geolocation data"
+  #task school_geolocation_data: :environemtn do
+    #my_file = "#{Rails.root}/lib/csv/schools.csv"
+    #File.delete(my_file)
+    #File.open(my_file, 'w')
+  #end
+
   desc "Generate schools"
   task schools: :environment do
 

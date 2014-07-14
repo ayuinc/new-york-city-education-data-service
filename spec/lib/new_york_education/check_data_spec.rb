@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-RSpec.describe NewYorkEducation::CheckData do
+RSpec.describe NewYorkEducation::DataTest do
 end

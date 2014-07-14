@@ -9,6 +9,7 @@ gem 'active_model_serializers'
 gem 'pry-rails'
 gem 'unicorn'
 gem 'virtus'
+gem 'geocoder', '~> 1.2.2'
 
 group :development do
   gem 'guard-rspec', require: false
