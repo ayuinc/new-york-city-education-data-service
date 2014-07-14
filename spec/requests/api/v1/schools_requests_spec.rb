@@ -14,7 +14,7 @@ describe 'api/v1/schools' do
             )
     end
 
-    let(:search_request) do
+    let(:search_by_address_request) do
       School.stub(:near).and_return([school])
       get "/api/v1/schools/search_by_address",
         { address: "333 East 4 Street" },
@@ -22,19 +22,41 @@ describe 'api/v1/schools' do
     end
 
     it "should be valid" do
-      search_request
+      search_by_address_request
       expect(response.status).to eq(200)
     end
 
     it "sends params to School" do
       School.should_receive(:near).with("333 East 4 Street, New York City", 2)
-      search_request
+      search_by_address_request
     end
 
     it "should return school" do
-      search_request
+      search_by_address_request
       schools = School.all.map{ |f| SchoolSerializer.new(f) }.to_json
       expect(response.body).to eq(schools)
+    end
+  end
+
+  describe "GET '/api/v1/schools/search_by_name_or_dbn'" do
+
+    let!(:school) do
+      create(:school, name: "First Name", dbn: "123456")
+    end
+
+    let(:search_by_name_or_dbn_request) do
+      get "/api/v1/schools/search_by_name_or_dbn?name_or_dbn=First_Name"
+    end
+
+    before(:each) { search_by_name_or_dbn_request }
+
+    it "should be valid" do
+      expect response.status == 200
+    end
+
+    it "should return the school" do
+      expected_school = SchoolSerializer.new(school).to_json
+      expect response.body == [expected_school]
     end
   end
 end
