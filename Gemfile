@@ -11,6 +11,7 @@ gem 'unicorn'
 gem 'virtus'
 gem 'geocoder', '~> 1.2.2'
 gem 'pg_search'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'guard-rspec', require: false
