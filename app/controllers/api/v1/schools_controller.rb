@@ -8,7 +8,7 @@ module Api
       end
 
       def search_by_name_or_dbn
-        schools = School.search_by_name_or_dbn(params[:name_or_dbn].gsub(/ps /i, "p.s. ")).limit(30)
+        schools = School.search_by_name_or_dbn(params[:name_or_dbn].gsub(/ps/i, "p.s. ")).limit(30)
         render json: schools, status: 200
       end
     end
