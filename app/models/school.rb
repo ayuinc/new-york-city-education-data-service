@@ -4,7 +4,9 @@ class School < ActiveRecord::Base
   has_many :api_school_datas
 
   include PgSearch
-  pg_search_scope :search_by_name_or_dbn, against: [:name, :dbn]
+  pg_search_scope :search_by_name_or_dbn,
+    against: [:name, :dbn],
+    using: { tsearch: { prefix: true } }
 
   geocoded_by :full_street_address
   after_validation :geocode, if: :primary_address_changed?
