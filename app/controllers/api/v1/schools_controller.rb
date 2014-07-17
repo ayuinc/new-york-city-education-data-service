@@ -15,7 +15,7 @@ module Api
         schools = School.search_by_name_or_dbn(search_word_with_zeros)
 
         render json: schools.concat(original_search), status: 200
-        render json: schools, status: 200
+        #render json: schools, status: 200
       end
 
       private
@@ -35,8 +35,8 @@ module Api
       end
 
       def add_zeros(phrase)
-        numbers = phrase.match(/ps (\d+)/ || /ms (\d+)/ || /is (\d+)/)
-        jsh_numbers = phrase.match(/jsh (\d+)/)
+        numbers = phrase.match(/ps (\d+)/ || /ms (\d+)/ || /is (\d+)/) || []
+        jsh_numbers = phrase.match(/jsh (\d+)/) || []
         phrase = phrase.split[0] + " "
         if numbers[1]
           (3 - numbers[1].length).times { phrase = phrase + "0" }

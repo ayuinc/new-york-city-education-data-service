@@ -96,5 +96,13 @@ describe 'api/v1/schools' do
         { name_or_dbn: 'ps300' },
         { 'Accept' => Mime::JSON.to_s }
     end
+
+    it "should add two zeros for jhs" do
+      create(:school, name: "P.S. 003 Charrette School")
+      School.should_receive(:search_by_name_or_dbn).with("jhs 003")
+      get "/api/v1/schools/search_by_name_or_dbn",
+        { name_or_dbn: 'jsh3' },
+        { 'Accept' => Mime::JSON.to_s }
+    end
   end
 end
