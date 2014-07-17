@@ -11,10 +11,11 @@ module Api
         search_word = downcase_and_strip(params[:name_or_dbn])
         search_word_with_spaces = add_spaces(search_word)
         search_word_with_zeros = add_zeros(search_word_with_spaces)
-        #original_search = School.search_by_name_or_dbn(params[:name_or_dbn])
+        original_search = School.search_by_name_or_dbn(params[:name_or_dbn])
         schools = School.search_by_name_or_dbn(search_word_with_zeros)
 
-        render json: schools.first(30), status: 200
+        #render json: schools.first(30), status: 200
+        render json: schools.concat(original_search).uniq.first(30), status: 200
       end
 
       private

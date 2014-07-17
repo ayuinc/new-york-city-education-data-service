@@ -3,7 +3,7 @@ class School < ActiveRecord::Base
   has_many :school_datas
   has_many :api_school_datas
 
-  before_save :downcase_and_strip
+  before_save :strip_punctuation
 
   include PgSearch
   pg_search_scope :search_by_name_or_dbn,
@@ -12,8 +12,8 @@ class School < ActiveRecord::Base
       tsearch: { prefix: true }
     }
 
-  geocoded_by :full_street_address
-  after_validation :geocode, if: :primary_address_changed?
+  #geocoded_by :full_street_address
+  #after_validation :geocode, if: :primary_address_changed?
 
   scope :nearby_schools, ->(address, distance) { near(([address.to_s, "New York City"].compact.join(", ")), distance) }
 
@@ -23,7 +23,7 @@ class School < ActiveRecord::Base
 
   private
 
-  def downcase_and_strip
-    self.name = self.name.downcase.gsub(/[^a-z0-9\s]/i, '')
+  def strip_punctuation
+    self.name = self.name.gsub(/[^a-z0-9\s]/i, '')
   end
 end

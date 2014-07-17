@@ -7,12 +7,12 @@ RSpec.describe School, :type => :model do
     it { should have_many(:school_datas) }
   end
 
-  describe 'strip and downcase punctuation' do
-    it "strips and downcase" do
+  describe 'strip punctuation' do
+    it "strips" do
       school = build(:school, name: "P.S. 003")
       school.save
       school.reload
-      expect(School.last.name).to  eq("ps 003")
+      expect(School.last.name).to  eq("PS 003")
     end
   end
 
