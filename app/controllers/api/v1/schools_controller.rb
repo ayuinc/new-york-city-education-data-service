@@ -8,8 +8,17 @@ module Api
       end
 
       def search_by_name_or_dbn
-        other_school_matches = School.search_by_name_or_dbn(params[:name_or_dbn].gsub(/ps\S/i) { |s| s.insert(2, " ") }).limit(30)
-        schools = School.search_by_name_or_dbn(params[:name_or_dbn].gsub(/^ps/i, "p.s. ")).limit(30).concat(other_school_matches)
+        if params[:name_or_dbn].match(/ps\S/)
+          schools = School.search_by_name_or_dbn(params[:name_or_dbn].gsub(/ps\S/i) do |s|
+            s.insert(2, " 00")
+            s.insert(1, ".")
+          end
+          )
+          schools.limit(30)
+        else
+          schools = School.search_by_name_or_dbn(params[:name_or_dbn].gsub(/^ps/i, "p.s. ")).limit(30)
+        end
+
         render json: schools, status: 200
       end
     end
