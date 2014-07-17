@@ -101,7 +101,23 @@ describe 'api/v1/schools' do
       create(:school, name: "P.S. 003 Charrette School")
       School.should_receive(:search_by_name_or_dbn).with("jhs 003")
       get "/api/v1/schools/search_by_name_or_dbn",
-        { name_or_dbn: 'jsh3' },
+        { name_or_dbn: 'jhs3' },
+        { 'Accept' => Mime::JSON.to_s }
+    end
+
+    it "should add two zeros for ms" do
+      create(:school, name: "P.S. 003 Charrette School")
+      School.should_receive(:search_by_name_or_dbn).with("ms 003")
+      get "/api/v1/schools/search_by_name_or_dbn",
+        { name_or_dbn: 'ms3' },
+        { 'Accept' => Mime::JSON.to_s }
+    end
+
+    it "should add two zeros for is" do
+      create(:school, name: "P.S. 003 Charrette School")
+      School.should_receive(:search_by_name_or_dbn).with("is 003")
+      get "/api/v1/schools/search_by_name_or_dbn",
+        { name_or_dbn: 'is3' },
         { 'Accept' => Mime::JSON.to_s }
     end
   end
