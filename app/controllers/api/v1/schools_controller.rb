@@ -14,7 +14,7 @@ module Api
         original_search = School.search_by_name_or_dbn(params[:name_or_dbn])
         schools = School.search_by_name_or_dbn(search_word_with_zeros)
 
-        render json: schools.concat(original_search), status: 200
+        render json: schools.concat(original_search).first(30), status: 200
         #render json: schools, status: 200
       end
 
