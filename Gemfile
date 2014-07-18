@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-ruby '2.1.0'
-
 gem 'rails', '4.1.1'
 gem 'rails-api'
 gem 'pg'
@@ -11,6 +9,7 @@ gem 'unicorn'
 gem 'virtus'
 gem 'geocoder', '~> 1.2.2'
 gem 'pg_search'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'guard-rspec', require: false

@@ -81,8 +81,8 @@ test: &test
 production:
   <<: *default
   database: nyc_education_test_production
-  username: nyc_education_test
-  password: <%= ENV['NYC_EDUCATION_TEST_DATABASE_PASSWORD'] %>
+  username: deploy
+  password: pwnd1010
 
 cucumber:
   <<: *test
