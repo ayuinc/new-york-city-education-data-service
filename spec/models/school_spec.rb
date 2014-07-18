@@ -1,9 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe School, :type => :model do
+
   describe 'relations' do
     it { should have_many(:api_school_datas) }
     it { should have_many(:school_datas) }
+  end
+
+  describe 'strip punctuation' do
+    it "strips" do
+      school = build(:school, name: "P.S. 003")
+      school.save
+      school.reload
+      expect(School.last.name).to  eq("PS 003")
+    end
   end
 
   describe 'full_street_address' do
@@ -27,40 +37,40 @@ RSpec.describe School, :type => :model do
 
     it "returns by dbn" do
       result = School.search_by_name_or_dbn(school.dbn)
-      expect(result) == [school]
+      expect(result).to eq([school])
     end
 
     it "returns by name" do
       result = School.search_by_name_or_dbn(school.name)
-      expect(result) == [school]
+      expect(result).to eq([school])
     end
 
     it "returns a partial name search" do
       result = School.search_by_name_or_dbn("School")
-      expect result == [school]
+      expect(result).to eq([school])
     end
 
     it "returns a partial dbn search" do
       result = School.search_by_name_or_dbn("1234")
-      expect result == [school]
+      expect(result).to eq([school])
     end
 
     it "should return multiple partial matches" do
       school_two = create(:school, name: "Second School Name")
       result = School.search_by_name_or_dbn("School")
-      expect result == [school, school_two]
+      expect(result).to eq([school_two, school])
     end
 
     it "stills returns a unique result" do
       school_two = create(:school, name: "School Name Second ")
       result = School.search_by_name_or_dbn("Second")
-      expect result == [school_two]
+      expect(result).to eq([school_two])
     end
 
     it "should disregard character case" do
       school_two = create(:school, name: "School Name Second ")
       result = School.search_by_name_or_dbn("SeCoNd")
-      expect result == [school_two]
+      expect(result).to eq([school_two])
     end
   end
 end

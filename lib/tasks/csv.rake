@@ -2,7 +2,7 @@ namespace :csv do
 
   desc "Populate database with school data"
   task import: :environment do
-    Rake::Task["csv:schools"].invoke
+    Rake::Task["csv:create_schools"].invoke
     Rake::Task["csv:school_data"].invoke
   end
 
@@ -25,7 +25,7 @@ namespace :csv do
   end
 
   desc "Generate schools"
-  task schools: :environment do
+  task create_schools: :environment do
 
     schools = File.open("#{Rails.root}/lib/csv/schools.csv")
 
@@ -43,10 +43,9 @@ namespace :csv do
 
 
   def csv_to_relational_db(file, model)
-    ActiveRecord::Base.transaction do
-      CSV.foreach(file, headers: true) do |row|
-        model.create!(row.to_hash)
-      end
+    CSV.foreach(file, headers: true) do |row|
+      record = model.new(row.to_hash)
+      record.save
     end
   end
 
