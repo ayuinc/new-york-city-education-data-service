@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe School, :type => :model do
+RSpec.describe School, type: :model do
 
   describe 'relations' do
     it { should have_many(:api_school_datas) }
@@ -71,6 +71,16 @@ RSpec.describe School, :type => :model do
       school_two = create(:school, name: "School Name Second ")
       result = School.search_by_name_or_dbn("SeCoNd")
       expect(result).to eq([school_two])
+    end
+  end
+
+  describe 'search_results' do
+    it "should join two search results" do
+      school_one = create(:school, name: "ps 003", dbn: "123455678")
+      school_two = create(:school, name: "ps3", dbn: '87654321')
+      search_params = 'ps3'
+      results = School.search_results(search_params)
+      expect(results).to eq([school_one, school_two])
     end
   end
 end
