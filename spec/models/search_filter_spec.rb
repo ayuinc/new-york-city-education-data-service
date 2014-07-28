@@ -4,9 +4,11 @@ RSpec.describe SearchFilter, type: :model do
 
   describe 'filter' do
 
-    it 'should downcase and strip' do
-      phrase = SearchFilter.new('P.S. 003 Charrette School').filter
-      expect(phrase).to eq('ps 003 charrette school')
+    describe 'downcase' do
+      it 'should downcase and strip' do
+        phrase = SearchFilter.new('P.S. 003 Charrette School').filter
+        expect(phrase).to eq('ps 003 charrette school')
+      end
     end
 
     describe 'spaces' do
@@ -61,6 +63,35 @@ RSpec.describe SearchFilter, type: :model do
       it "should add two zeros for jhs schools with 1 digits" do
         phrase = SearchFilter.new('jhs3').filter
         expect(phrase).to eq('jhs 003')
+      end
+
+      describe 'for just digits' do
+
+        it 'should add 2 zeros for just one digit' do
+          phrase = SearchFilter.new('3').filter
+          expect(phrase).to eq('003')
+        end
+
+        it 'should one zero for just 2 digits' do
+          phrase = SearchFilter.new('03').filter
+          expect(phrase).to eq('003')
+        end
+
+        it 'should not add zeros for 3 digits' do
+          phrase = SearchFilter.new('003').filter
+          expect(phrase).to eq('003')
+        end
+
+        it 'should not add zeros for more than 3 digits' do
+          phrase = SearchFilter.new('0003').filter
+          expect(phrase).to eq('0003')
+        end
+
+        it "should not add zeros for just a string with numbers" do
+          phrase = SearchFilter.new('3string').filter
+          expect(phrase).to eq('3string')
+
+        end
       end
     end
   end

@@ -8,6 +8,7 @@ class SearchFilter
     downcase_and_strip
     add_spaces
     add_zeros if missing_zeros?
+    add_zeros_for_digits
     @phrase
   end
 
@@ -63,5 +64,12 @@ class SearchFilter
     school_matches = all_schools.keep_if { |school| zero_matcher(school) }
     digit_matcher = school_matches.map { |school| @phrase.match(/#{school} (\d+)/) }
     digit_matcher[0][1] if digit_matcher.present?
+  end
+
+  def add_zeros_for_digits
+    only_digit_matcher = @phrase.match(/^(\d+)$/) || []
+    if only_digit_matcher[1]
+      (3 - only_digit_matcher[1].length).times { @phrase.insert(0, '0') }
+    end
   end
 end
