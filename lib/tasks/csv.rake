@@ -4,11 +4,13 @@ namespace :csv do
   task import: :environment do
     Rake::Task["csv:create_schools"].invoke
     Rake::Task["csv:school_data"].invoke
+    Rake::Task["csv:generate_dbn_data"].invoke
   end
 
-  desc "Export data to csv"
-  task export: :environment do
-    Rake::Task["csv:school_data"].invoke
+  desc "Generate schools"
+  task create_schools: :environment do
+    schools = File.open("#{Rails.root}/lib/csv/schools.csv")
+    csv_to_relational_db(schools, School)
   end
 
   desc "Export school geolocation data"
@@ -24,12 +26,18 @@ namespace :csv do
     end
   end
 
-  desc "Generate schools"
-  task create_schools: :environment do
+  desc "Generate school data"
+  task generate_dbn_data: :environment do
+    schools = School.all
+    schools.each do |school|
+      school.dbn_id = school.dbn[3..5]
+      school.save
+    end
+  end
 
-    schools = File.open("#{Rails.root}/lib/csv/schools.csv")
-
-    csv_to_relational_db(schools, School)
+  desc "Export data to csv"
+  task export: :environment do
+    Rake::Task["csv:school_data"].invoke
   end
 
   desc "Generate school data"
@@ -40,7 +48,6 @@ namespace :csv do
     csv_to_relational_db(school_data, SchoolData)
     create_school_data_association
   end
-
 
   def csv_to_relational_db(file, model)
     CSV.foreach(file, headers: true) do |row|

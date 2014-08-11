@@ -28,15 +28,10 @@ RSpec.describe School, type: :model do
 
   describe 'search_by_name_or_dbn' do
 
-    let(:school) do
-      create(:school,
-             name: "School Name",
-             dbn: "12345678"
-            )
-    end
+    let!(:school) { create(:school, name: "School Name") }
 
-    it "returns by dbn" do
-      result = School.search_by_name_or_dbn(school.dbn)
+    it "returns by dbn_id" do
+      result = School.search_by_name_or_dbn(school.dbn_id)
       expect(result).to eq([school])
     end
 
@@ -50,15 +45,10 @@ RSpec.describe School, type: :model do
       expect(result).to eq([school])
     end
 
-    it "returns a partial dbn search" do
-      result = School.search_by_name_or_dbn("1234")
-      expect(result).to eq([school])
-    end
-
     it "should return multiple partial matches" do
       school_two = create(:school, name: "Second School Name")
       result = School.search_by_name_or_dbn("School")
-      expect(result).to eq([school_two, school])
+      expect(result).to eq([school, school_two])
     end
 
     it "stills returns a unique result" do

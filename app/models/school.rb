@@ -2,7 +2,7 @@ class School < ActiveRecord::Base
 
   include PgSearch
   pg_search_scope :search_by_name_or_dbn, 
-    against: [:name, :dbn], 
+    against: [:name, :dbn_id], 
     using: { tsearch: { prefix: true } }
 
   geocoded_by :full_street_address
