@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811160819) do
+ActiveRecord::Schema.define(version: 20141122183632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -780,6 +780,7 @@ ActiveRecord::Schema.define(version: 20140811160819) do
     t.string  "p_q3a_strongly_agree_pr",                  default: "0.00"
     t.string  "p_q5b_satisfied_pr",                       default: "0.00"
     t.string  "p_q5b_very_satisfied_pr",                  default: "0.00"
+    t.string  "dbn"
   end
 
   add_index "school_data", ["school_id"], name: "index_school_data_on_school_id", using: :btree
