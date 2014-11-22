@@ -5,13 +5,13 @@ class School < ActiveRecord::Base
     against: [:name, :dbn,:dbn_id], 
     using: { tsearch: { prefix: true } }
 
-  geocoded_by :full_street_address
+  #geocoded_by :full_street_address
 
-  has_many :school_datas
+  has_many :school_datas, class_name: 'SchoolData', foreign_key: 'dbn'
   has_many :api_school_datas
 
   before_save :strip_punctuation
-  after_validation :geocode, if: :primary_address_changed?
+  #after_validation :geocode, if: :primary_address_changed?
 
 
   scope :nearby_schools, ->(address, distance) do
