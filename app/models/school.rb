@@ -5,7 +5,7 @@ class School < ActiveRecord::Base
     against: [:name, :dbn,:dbn_id], 
     using: { tsearch: { prefix: true } }
 
-  #geocoded_by :full_street_address
+  geocoded_by :full_street_address
 
   has_many :school_datas, class_name: 'SchoolData', foreign_key: 'dbn'
   has_many :api_school_datas
